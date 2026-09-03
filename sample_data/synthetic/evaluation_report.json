@@ -1,0 +1,21 @@
+{
+  "total_documents": 25,
+  "document_accuracy_pct": 76.0,
+  "overall_field_accuracy_pct": 91.91,
+  "character_accuracy_pct": 98.38,
+  "missing_field_rate_pct": 4.41,
+  "false_extraction_rate_pct": 3.68,
+  "manual_review_rate_pct": 92.0,
+  "per_field_accuracy": {
+    "Account Number": 94.44,
+    "Consumer ID": 94.44,
+    "Previous Reading": 94.44,
+    "Current Reading": 66.67,
+    "Units": 94.44,
+    "Total Amount": 94.44,
+    "Invoice Number": 100.0,
+    "Subtotal": 100.0,
+    "Tax Amount": 100.0,
+    "Grand Total": 100.0
+  }
+}

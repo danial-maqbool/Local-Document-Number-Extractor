@@ -7,68 +7,62 @@
       "name": "Account Number",
       "type": "integer",
       "labels": ["Account No", "Account Number", "A/C No", "Account #"],
-      "urdu_labels": ["کھاتہ نمبر", "اکاؤنٹ نمبر"],
+      "urdu_labels": ["????? ????", "?????? ????"],
       "min_digits": 8,
-      "max_digits": 14,
+      "max_digits": 9,
       "required": true,
-      "region": {"x_min": 0.50, "y_min": 0.05, "x_max": 0.98, "y_max": 0.25},
-      "confidence_threshold": 0.70
+      "confidence_threshold": 0.65
     },
     {
       "name": "Consumer ID",
       "type": "integer",
       "labels": ["Consumer ID", "Consumer No", "Reference No", "Ref No"],
-      "urdu_labels": ["صارف نمبر", "حوالہ نمبر"],
+      "urdu_labels": ["???? ????", "????? ????"],
       "min_digits": 10,
-      "max_digits": 16,
+      "max_digits": 14,
       "required": true,
-      "region": {"x_min": 0.02, "y_min": 0.10, "x_max": 0.50, "y_max": 0.28},
-      "confidence_threshold": 0.70
+      "confidence_threshold": 0.65
     },
     {
       "name": "Previous Reading",
       "type": "integer",
-      "labels": ["Previous Reading", "Prev Reading", "Previous", "Prev Read"],
-      "urdu_labels": ["سابقہ ریڈنگ"],
+      "labels": ["Previous Reading", "Prev Reading", "Previous Read"],
+      "urdu_labels": ["????? ?????"],
       "min_value": 0,
       "max_value": 999999,
       "required": true,
-      "region": {"x_min": 0.02, "y_min": 0.30, "x_max": 0.50, "y_max": 0.55},
-      "confidence_threshold": 0.70
+      "confidence_threshold": 0.65
     },
     {
       "name": "Current Reading",
       "type": "integer",
-      "labels": ["Current Reading", "Curr Reading", "Present Reading", "Current Read"],
-      "urdu_labels": ["موجودہ ریڈنگ", "حالیہ ریڈنگ"],
+      "labels": ["Current Reading", "Current", "Curr Reading", "Present Reading", "Current Read"],
+      "urdu_labels": ["?????? ?????", "????? ?????"],
       "min_value": 0,
       "max_value": 999999,
       "required": true,
-      "region": {"x_min": 0.45, "y_min": 0.30, "x_max": 0.98, "y_max": 0.55},
-      "confidence_threshold": 0.70
+      "confidence_threshold": 0.65
     },
     {
       "name": "Units",
       "type": "integer",
-      "labels": ["Units Consumed", "Units", "Total Units"],
-      "urdu_labels": ["یونٹس", "کل یونٹس"],
+      "labels": ["Units Consumed", "Total Units"],
+      "urdu_labels": ["?????", "?? ?????"],
       "min_value": 0,
       "max_value": 99999,
       "required": true,
-      "region": {"x_min": 0.20, "y_min": 0.45, "x_max": 0.85, "y_max": 0.65},
-      "confidence_threshold": 0.70
+      "confidence_threshold": 0.65
     },
     {
       "name": "Total Amount",
       "type": "decimal",
-      "labels": ["Total Amount", "Payable Amount", "Amount Due", "Total Payable"],
-      "urdu_labels": ["قابل ادا رقم", "کل رقم"],
+      "labels": ["Total Amount Payable", "Total Amount", "Payable Amount", "Amount Due", "Total Payable"],
+      "urdu_labels": ["???? ??? ???", "?? ???"],
       "min_value": 0,
       "max_value": 10000000,
       "required": true,
       "decimal_allowed": true,
-      "region": {"x_min": 0.40, "y_min": 0.70, "x_max": 0.98, "y_max": 0.95},
-      "confidence_threshold": 0.70
+      "confidence_threshold": 0.65
     }
   ],
   "cross_field_rules": [

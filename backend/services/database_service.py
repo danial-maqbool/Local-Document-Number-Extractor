@@ -152,10 +152,17 @@ class DatabaseService:
         with self.get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute("""
-                INSERT OR REPLACE INTO processing_runs (
+                INSERT INTO processing_runs (
                     id, start_time, end_time, template_id,
                     total_files, successful, needs_review, failed, avg_confidence
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(id) DO UPDATE SET
+                    end_time = excluded.end_time,
+                    total_files = excluded.total_files,
+                    successful = excluded.successful,
+                    needs_review = excluded.needs_review,
+                    failed = excluded.failed,
+                    avg_confidence = excluded.avg_confidence;
             """, (
                 run.run_id,
                 run.start_time.isoformat(),
@@ -181,14 +188,29 @@ class DatabaseService:
                     VALUES (?, ?, ?);
                 """, (run_id, doc.processed_at.isoformat(), doc.template_id))
 
-            # Insert document
+            # Insert document with ON CONFLICT UPDATE
             cursor.execute("""
-                INSERT OR REPLACE INTO documents (
+                INSERT INTO documents (
                     id, run_id, filename, file_hash, original_path, processed_path,
                     template_id, overall_confidence, status, blur_score, brightness,
                     contrast, quality_status, issues_json, cross_field_passed,
                     validation_errors_json, created_at
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(id) DO UPDATE SET
+                    run_id = COALESCE(excluded.run_id, documents.run_id),
+                    filename = excluded.filename,
+                    original_path = excluded.original_path,
+                    processed_path = excluded.processed_path,
+                    template_id = excluded.template_id,
+                    overall_confidence = excluded.overall_confidence,
+                    status = excluded.status,
+                    blur_score = excluded.blur_score,
+                    brightness = excluded.brightness,
+                    contrast = excluded.contrast,
+                    quality_status = excluded.quality_status,
+                    issues_json = excluded.issues_json,
+                    cross_field_passed = excluded.cross_field_passed,
+                    validation_errors_json = excluded.validation_errors_json;
             """, (
                 doc.document_id,
                 run_id,

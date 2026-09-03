@@ -62,6 +62,10 @@ class BatchService:
                 logger.info(f"Reusing existing record for duplicate file {file_path.name} (hash: {file_hash[:8]})")
                 full_doc = self.db.get_document(existing["id"])
                 if full_doc:
+                    if run_id:
+                        with self.db.get_connection() as conn:
+                            conn.execute("UPDATE documents SET run_id = ? WHERE id = ?", (run_id, existing["id"]))
+                            conn.commit()
                     # Construct DocumentProcessResult from DB
                     fields = {}
                     for ext in full_doc.get("extractions", []):
@@ -150,7 +154,7 @@ class BatchService:
 
         # 2. OCR Inference
         ocr_items = OCRService.extract_text_and_boxes(
-            processed_img, image_hash=file_hash, force_reprocess=force_reprocess
+            processed_img, image_hash=file_hash, force_reprocess=False
         )
 
         h, w = processed_img.shape[:2]

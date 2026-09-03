@@ -1,0 +1,288 @@
+{
+  "bill_doc_01.jpg": {
+    "template_id": "electricity_bill",
+    "expected_fields": {
+      "Account Number": 95822412,
+      "Consumer ID": 1478163327,
+      "Previous Reading": 14012,
+      "Current Reading": 14382,
+      "Units": 370,
+      "Total Amount": 9856.0
+    },
+    "is_severe_blur": false
+  },
+  "bill_doc_02.jpg": {
+    "template_id": "electricity_bill",
+    "expected_fields": {
+      "Account Number": 83197857,
+      "Consumer ID": 9963334018,
+      "Previous Reading": 18825,
+      "Current Reading": 18977,
+      "Units": 152,
+      "Total Amount": 3603.92
+    },
+    "is_severe_blur": false
+  },
+  "bill_doc_03.jpg": {
+    "template_id": "electricity_bill",
+    "expected_fields": {
+      "Account Number": 85329037,
+      "Consumer ID": 7635473142,
+      "Previous Reading": 12223,
+      "Current Reading": 12802,
+      "Units": 579,
+      "Total Amount": 18620.73
+    },
+    "is_severe_blur": false
+  },
+  "bill_doc_04.jpg": {
+    "template_id": "electricity_bill",
+    "expected_fields": {
+      "Account Number": 23718431,
+      "Consumer ID": 5693307665,
+      "Previous Reading": 8169,
+      "Current Reading": 8656,
+      "Units": 487,
+      "Total Amount": 17659.17
+    },
+    "is_severe_blur": false
+  },
+  "bill_doc_05.jpg": {
+    "template_id": "electricity_bill",
+    "expected_fields": {
+      "Account Number": 71662963,
+      "Consumer ID": 3303082117,
+      "Previous Reading": 17403,
+      "Current Reading": 17603,
+      "Units": 200,
+      "Total Amount": 6598.29
+    },
+    "is_severe_blur": false
+  },
+  "bill_doc_06.jpg": {
+    "template_id": "electricity_bill",
+    "expected_fields": {
+      "Account Number": 93016315,
+      "Consumer ID": 1298737106,
+      "Previous Reading": 12467,
+      "Current Reading": 12883,
+      "Units": 416,
+      "Total Amount": 16151.76
+    },
+    "is_severe_blur": false
+  },
+  "bill_doc_07.jpg": {
+    "template_id": "electricity_bill",
+    "expected_fields": {
+      "Account Number": 23556182,
+      "Consumer ID": 6927597015,
+      "Previous Reading": 19857,
+      "Current Reading": 20350,
+      "Units": 493,
+      "Total Amount": 12371.12
+    },
+    "is_severe_blur": false
+  },
+  "bill_doc_08.jpg": {
+    "template_id": "electricity_bill",
+    "expected_fields": {
+      "Account Number": 96977837,
+      "Consumer ID": 9896606039,
+      "Previous Reading": 10607,
+      "Current Reading": 10977,
+      "Units": 370,
+      "Total Amount": 9359.12
+    },
+    "is_severe_blur": false
+  },
+  "bill_doc_09.jpg": {
+    "template_id": "electricity_bill",
+    "expected_fields": {
+      "Account Number": 45935572,
+      "Consumer ID": 1284277889,
+      "Previous Reading": 23585,
+      "Current Reading": 24027,
+      "Units": 442,
+      "Total Amount": 11527.39
+    },
+    "is_severe_blur": false
+  },
+  "bill_doc_10.jpg": {
+    "template_id": "electricity_bill",
+    "expected_fields": {
+      "Account Number": 29175900,
+      "Consumer ID": 2137651678,
+      "Previous Reading": 13081,
+      "Current Reading": 13470,
+      "Units": 389,
+      "Total Amount": 13478.79
+    },
+    "is_severe_blur": false
+  },
+  "bill_doc_11.jpg": {
+    "template_id": "electricity_bill",
+    "expected_fields": {
+      "Account Number": 88320463,
+      "Consumer ID": 7010379415,
+      "Previous Reading": 12186,
+      "Current Reading": 12447,
+      "Units": 261,
+      "Total Amount": 8006.15
+    },
+    "is_severe_blur": false
+  },
+  "bill_doc_12.jpg": {
+    "template_id": "electricity_bill",
+    "expected_fields": {
+      "Account Number": 16323852,
+      "Consumer ID": 4698408854,
+      "Previous Reading": 10008,
+      "Current Reading": 10291,
+      "Units": 283,
+      "Total Amount": 10081.4
+    },
+    "is_severe_blur": false
+  },
+  "bill_doc_13.jpg": {
+    "template_id": "electricity_bill",
+    "expected_fields": {
+      "Account Number": 61642594,
+      "Consumer ID": 9573276057,
+      "Previous Reading": 22338,
+      "Current Reading": 22715,
+      "Units": 377,
+      "Total Amount": 14595.86
+    },
+    "is_severe_blur": false
+  },
+  "bill_doc_14.jpg": {
+    "template_id": "electricity_bill",
+    "expected_fields": {
+      "Account Number": 11540956,
+      "Consumer ID": 8519962896,
+      "Previous Reading": 16146,
+      "Current Reading": 16380,
+      "Units": 234,
+      "Total Amount": 6410.13
+    },
+    "is_severe_blur": false
+  },
+  "bill_doc_15.jpg": {
+    "template_id": "electricity_bill",
+    "expected_fields": {
+      "Account Number": 78137358,
+      "Consumer ID": 3615507143,
+      "Previous Reading": 10008,
+      "Current Reading": 10510,
+      "Units": 502,
+      "Total Amount": 17484.24
+    },
+    "is_severe_blur": false
+  },
+  "bill_doc_16.jpg": {
+    "template_id": "electricity_bill",
+    "expected_fields": {
+      "Account Number": 10076758,
+      "Consumer ID": 7867414708,
+      "Previous Reading": 21010,
+      "Current Reading": 21149,
+      "Units": 139,
+      "Total Amount": 3551.99
+    },
+    "is_severe_blur": false
+  },
+  "bill_doc_17.jpg": {
+    "template_id": "electricity_bill",
+    "expected_fields": {
+      "Account Number": 51273847,
+      "Consumer ID": 2028439863,
+      "Previous Reading": 12892,
+      "Current Reading": 13092,
+      "Units": 200,
+      "Total Amount": 4968.49
+    },
+    "is_severe_blur": false
+  },
+  "bill_doc_18.jpg": {
+    "template_id": "electricity_bill",
+    "expected_fields": {
+      "Account Number": 19289546,
+      "Consumer ID": 1540137296,
+      "Previous Reading": 20574,
+      "Current Reading": 20863,
+      "Units": 289,
+      "Total Amount": 8032.6
+    },
+    "is_severe_blur": true
+  },
+  "invoice_doc_01.jpg": {
+    "template_id": "invoice",
+    "expected_fields": {
+      "Invoice Number": 65461,
+      "Subtotal": 43574.52,
+      "Tax Amount": 7843.41,
+      "Grand Total": 51417.93
+    },
+    "is_severe_blur": false
+  },
+  "invoice_doc_02.jpg": {
+    "template_id": "invoice",
+    "expected_fields": {
+      "Invoice Number": 80686,
+      "Subtotal": 35210.61,
+      "Tax Amount": 6337.91,
+      "Grand Total": 41548.52
+    },
+    "is_severe_blur": false
+  },
+  "invoice_doc_03.jpg": {
+    "template_id": "invoice",
+    "expected_fields": {
+      "Invoice Number": 50857,
+      "Subtotal": 20959.69,
+      "Tax Amount": 3772.74,
+      "Grand Total": 24732.43
+    },
+    "is_severe_blur": false
+  },
+  "invoice_doc_04.jpg": {
+    "template_id": "invoice",
+    "expected_fields": {
+      "Invoice Number": 67422,
+      "Subtotal": 40984.56,
+      "Tax Amount": 7377.22,
+      "Grand Total": 48361.78
+    },
+    "is_severe_blur": false
+  },
+  "invoice_doc_05.jpg": {
+    "template_id": "invoice",
+    "expected_fields": {
+      "Invoice Number": 25860,
+      "Subtotal": 14916.22,
+      "Tax Amount": 2684.92,
+      "Grand Total": 17601.14
+    },
+    "is_severe_blur": false
+  },
+  "invoice_doc_06.jpg": {
+    "template_id": "invoice",
+    "expected_fields": {
+      "Invoice Number": 12757,
+      "Subtotal": 28532.35,
+      "Tax Amount": 5135.82,
+      "Grand Total": 33668.17
+    },
+    "is_severe_blur": false
+  },
+  "invoice_doc_07.jpg": {
+    "template_id": "invoice",
+    "expected_fields": {
+      "Invoice Number": 40161,
+      "Subtotal": 28537.6,
+      "Tax Amount": 5136.77,
+      "Grand Total": 33674.37
+    },
+    "is_severe_blur": false
+  }
+}
