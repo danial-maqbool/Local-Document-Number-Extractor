@@ -1,0 +1,84 @@
+{
+  "id": "electricity_bill",
+  "name": "Electricity Bill",
+  "description": "Utility electricity billing document with readings and charges in English and Urdu",
+  "fields": [
+    {
+      "name": "Account Number",
+      "type": "integer",
+      "labels": ["Account No", "Account Number", "A/C No", "Account #"],
+      "urdu_labels": ["کھاتہ نمبر", "اکاؤنٹ نمبر"],
+      "min_digits": 8,
+      "max_digits": 14,
+      "required": true,
+      "region": {"x_min": 0.50, "y_min": 0.05, "x_max": 0.98, "y_max": 0.25},
+      "confidence_threshold": 0.70
+    },
+    {
+      "name": "Consumer ID",
+      "type": "integer",
+      "labels": ["Consumer ID", "Consumer No", "Reference No", "Ref No"],
+      "urdu_labels": ["صارف نمبر", "حوالہ نمبر"],
+      "min_digits": 10,
+      "max_digits": 16,
+      "required": true,
+      "region": {"x_min": 0.02, "y_min": 0.10, "x_max": 0.50, "y_max": 0.28},
+      "confidence_threshold": 0.70
+    },
+    {
+      "name": "Previous Reading",
+      "type": "integer",
+      "labels": ["Previous Reading", "Prev Reading", "Previous", "Prev Read"],
+      "urdu_labels": ["سابقہ ریڈنگ"],
+      "min_value": 0,
+      "max_value": 999999,
+      "required": true,
+      "region": {"x_min": 0.02, "y_min": 0.30, "x_max": 0.50, "y_max": 0.55},
+      "confidence_threshold": 0.70
+    },
+    {
+      "name": "Current Reading",
+      "type": "integer",
+      "labels": ["Current Reading", "Curr Reading", "Present Reading", "Current Read"],
+      "urdu_labels": ["موجودہ ریڈنگ", "حالیہ ریڈنگ"],
+      "min_value": 0,
+      "max_value": 999999,
+      "required": true,
+      "region": {"x_min": 0.45, "y_min": 0.30, "x_max": 0.98, "y_max": 0.55},
+      "confidence_threshold": 0.70
+    },
+    {
+      "name": "Units",
+      "type": "integer",
+      "labels": ["Units Consumed", "Units", "Total Units"],
+      "urdu_labels": ["یونٹس", "کل یونٹس"],
+      "min_value": 0,
+      "max_value": 99999,
+      "required": true,
+      "region": {"x_min": 0.20, "y_min": 0.45, "x_max": 0.85, "y_max": 0.65},
+      "confidence_threshold": 0.70
+    },
+    {
+      "name": "Total Amount",
+      "type": "decimal",
+      "labels": ["Total Amount", "Payable Amount", "Amount Due", "Total Payable"],
+      "urdu_labels": ["قابل ادا رقم", "کل رقم"],
+      "min_value": 0,
+      "max_value": 10000000,
+      "required": true,
+      "decimal_allowed": true,
+      "region": {"x_min": 0.40, "y_min": 0.70, "x_max": 0.98, "y_max": 0.95},
+      "confidence_threshold": 0.70
+    }
+  ],
+  "cross_field_rules": [
+    {
+      "rule_name": "units_balance_check",
+      "description": "Units should equal Current Reading minus Previous Reading",
+      "rule_type": "difference_equals",
+      "target_field": "Units",
+      "operands": ["Current Reading", "Previous Reading"],
+      "tolerance": 0.01
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-﻿def test_environment():
+def test_environment():
     import cv2
     import numpy as np
     import PIL

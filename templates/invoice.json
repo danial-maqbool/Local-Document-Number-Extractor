@@ -1,0 +1,64 @@
+{
+  "id": "invoice",
+  "name": "General Commercial Invoice",
+  "description": "Standard business invoice with line items, tax, and total",
+  "fields": [
+    {
+      "name": "Invoice Number",
+      "type": "code",
+      "labels": ["Invoice Number", "Invoice No", "Inv #", "Bill No"],
+      "urdu_labels": ["انوائس نمبر", "بل نمبر"],
+      "min_digits": 4,
+      "max_digits": 12,
+      "required": true,
+      "region": {"x_min": 0.50, "y_min": 0.05, "x_max": 0.98, "y_max": 0.25},
+      "confidence_threshold": 0.70
+    },
+    {
+      "name": "Subtotal",
+      "type": "decimal",
+      "labels": ["Subtotal", "Sub Total", "Net Amount"],
+      "urdu_labels": ["کل رقم بغیر ٹیکس"],
+      "min_value": 0,
+      "max_value": 10000000,
+      "required": true,
+      "decimal_allowed": true,
+      "region": {"x_min": 0.40, "y_min": 0.55, "x_max": 0.98, "y_max": 0.75},
+      "confidence_threshold": 0.70
+    },
+    {
+      "name": "Tax Amount",
+      "type": "decimal",
+      "labels": ["Tax", "GST", "Sales Tax", "VAT"],
+      "urdu_labels": ["سیلز ٹیکس", "ٹیکس"],
+      "min_value": 0,
+      "max_value": 1000000,
+      "required": true,
+      "decimal_allowed": true,
+      "region": {"x_min": 0.40, "y_min": 0.65, "x_max": 0.98, "y_max": 0.85},
+      "confidence_threshold": 0.70
+    },
+    {
+      "name": "Grand Total",
+      "type": "decimal",
+      "labels": ["Total", "Grand Total", "Total Payable", "Balance Due"],
+      "urdu_labels": ["کل میزان", "کل واجب الادا"],
+      "min_value": 0,
+      "max_value": 10000000,
+      "required": true,
+      "decimal_allowed": true,
+      "region": {"x_min": 0.40, "y_min": 0.75, "x_max": 0.98, "y_max": 0.98},
+      "confidence_threshold": 0.70
+    }
+  ],
+  "cross_field_rules": [
+    {
+      "rule_name": "tax_total_check",
+      "description": "Grand Total should equal Subtotal plus Tax Amount",
+      "rule_type": "sum_equals",
+      "target_field": "Grand Total",
+      "operands": ["Subtotal", "Tax Amount"],
+      "tolerance": 1.0
+    }
+  ]
+}

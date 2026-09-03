@@ -1,4 +1,4 @@
-﻿"""
+"""
 Local Document Number Extractor
 Main application runner.
 """
