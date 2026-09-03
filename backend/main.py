@@ -61,6 +61,28 @@ app.mount("/static/synthetic", StaticFiles(directory=str(BASE_DIR / "sample_data
 
 # Mount frontend files
 FRONTEND_DIR = BASE_DIR / "frontend"
+
+@app.get("/style.css")
+async def get_root_style():
+    css_file = FRONTEND_DIR / "style.css"
+    if css_file.exists():
+        return FileResponse(str(css_file), media_type="text/css")
+    raise HTTPException(status_code=404, detail="style.css not found")
+
+@app.get("/app.js")
+async def get_root_app_js():
+    js_file = FRONTEND_DIR / "app.js"
+    if js_file.exists():
+        return FileResponse(str(js_file), media_type="application/javascript")
+    raise HTTPException(status_code=404, detail="app.js not found")
+
+@app.get("/ui")
+async def get_ui():
+    index_file = FRONTEND_DIR / "index.html"
+    if index_file.exists():
+        return FileResponse(str(index_file), media_type="text/html")
+    raise HTTPException(status_code=404, detail="index.html not found")
+
 if FRONTEND_DIR.exists():
     app.mount("/ui", StaticFiles(directory=str(FRONTEND_DIR), html=True), name="frontend_ui")
 
