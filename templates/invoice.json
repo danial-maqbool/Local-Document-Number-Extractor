@@ -6,20 +6,43 @@
     {
       "name": "Invoice Number",
       "type": "code",
-      "labels": ["Invoice Number", "Invoice No", "Inv #", "Bill No"],
-      "urdu_labels": ["?????? ????", "?? ????"],
+      "labels": [
+        "Invoice Number",
+        "Invoice No",
+        "Inv #",
+        "Bill No"
+      ],
+      "urdu_labels": [
+        "?????? ????",
+        "?? ????"
+      ],
       "min_digits": 4,
       "max_digits": 12,
+      "min_value": null,
+      "max_value": null,
+      "regex_pattern": null,
+      "region": null,
       "required": true,
+      "decimal_allowed": false,
       "confidence_threshold": 0.65
     },
     {
       "name": "Subtotal",
       "type": "decimal",
-      "labels": ["Subtotal", "Sub Total", "Net Amount"],
-      "urdu_labels": ["?? ??? ???? ????"],
-      "min_value": 0,
-      "max_value": 10000000,
+      "labels": [
+        "Subtotal",
+        "Sub Total",
+        "Net Amount"
+      ],
+      "urdu_labels": [
+        "?? ??? ???? ????"
+      ],
+      "min_digits": null,
+      "max_digits": null,
+      "min_value": 0.0,
+      "max_value": 10000000.0,
+      "regex_pattern": null,
+      "region": null,
       "required": true,
       "decimal_allowed": true,
       "confidence_threshold": 0.65
@@ -27,10 +50,23 @@
     {
       "name": "Tax Amount",
       "type": "decimal",
-      "labels": ["Sales Tax Amount", "Tax Amount", "Sales Tax", "GST Amount", "VAT Amount"],
-      "urdu_labels": ["???? ????", "????"],
-      "min_value": 0,
-      "max_value": 1000000,
+      "labels": [
+        "Sales Tax Amount",
+        "Tax Amount",
+        "Sales Tax",
+        "GST Amount",
+        "VAT Amount"
+      ],
+      "urdu_labels": [
+        "???? ????",
+        "????"
+      ],
+      "min_digits": null,
+      "max_digits": null,
+      "min_value": 0.0,
+      "max_value": 1000000.0,
+      "regex_pattern": null,
+      "region": null,
       "required": true,
       "decimal_allowed": true,
       "confidence_threshold": 0.65
@@ -38,13 +74,49 @@
     {
       "name": "Grand Total",
       "type": "decimal",
-      "labels": ["Grand Total", "Total Payable", "Balance Due", "Total Due"],
-      "urdu_labels": ["?? ?????", "?? ???? ?????"],
-      "min_value": 0,
-      "max_value": 10000000,
+      "labels": [
+        "Grand Total",
+        "Total Payable",
+        "Balance Due",
+        "Total Due"
+      ],
+      "urdu_labels": [
+        "?? ?????",
+        "?? ???? ?????"
+      ],
+      "min_digits": null,
+      "max_digits": null,
+      "min_value": 0.0,
+      "max_value": 10000000.0,
+      "regex_pattern": null,
+      "region": null,
       "required": true,
       "decimal_allowed": true,
       "confidence_threshold": 0.65
+    },
+    {
+      "name": "Number",
+      "type": "integer",
+      "labels": [
+        "Number"
+      ],
+      "urdu_labels": [
+        "نمبر"
+      ],
+      "min_digits": 1,
+      "max_digits": 5,
+      "min_value": null,
+      "max_value": null,
+      "regex_pattern": null,
+      "region": {
+        "x_min": 0.521,
+        "y_min": 0.088,
+        "x_max": 0.821,
+        "y_max": 0.266
+      },
+      "required": true,
+      "decimal_allowed": false,
+      "confidence_threshold": 0.7
     }
   ],
   "cross_field_rules": [
@@ -53,7 +125,10 @@
       "description": "Grand Total should equal Subtotal plus Tax Amount",
       "rule_type": "sum_equals",
       "target_field": "Grand Total",
-      "operands": ["Subtotal", "Tax Amount"],
+      "operands": [
+        "Subtotal",
+        "Tax Amount"
+      ],
       "tolerance": 1.0
     }
   ]

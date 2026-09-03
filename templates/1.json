@@ -1,0 +1,56 @@
+{
+  "id": "1",
+  "name": "1",
+  "description": "",
+  "fields": [
+    {
+      "name": "Number",
+      "type": "integer",
+      "labels": [
+        "Number"
+      ],
+      "urdu_labels": [
+        "نمبر"
+      ],
+      "min_digits": 1,
+      "max_digits": 5,
+      "min_value": null,
+      "max_value": null,
+      "regex_pattern": null,
+      "region": {
+        "x_min": 0.702,
+        "y_min": 0.153,
+        "x_max": 0.994,
+        "y_max": 0.219
+      },
+      "required": true,
+      "decimal_allowed": false,
+      "confidence_threshold": 0.7
+    },
+    {
+      "name": "Invoice Number",
+      "type": "code",
+      "labels": [
+        "Invoice Number"
+      ],
+      "urdu_labels": [
+        "انوائس نمبر"
+      ],
+      "min_digits": 10,
+      "max_digits": 15,
+      "min_value": null,
+      "max_value": null,
+      "regex_pattern": null,
+      "region": {
+        "x_min": 0.065,
+        "y_min": 0.071,
+        "x_max": 0.289,
+        "y_max": 0.104
+      },
+      "required": true,
+      "decimal_allowed": false,
+      "confidence_threshold": 0.7
+    }
+  ],
+  "cross_field_rules": []
+}
