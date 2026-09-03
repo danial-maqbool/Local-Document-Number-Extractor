@@ -75,9 +75,7 @@ function showToast(message, type = "info") {
 
   const toast = document.createElement("div");
   toast.className = `toast toast-${type}`;
-  toast.innerHTML = `
-    <span>${message}</span>
-  `;
+  toast.innerHTML = `<span>${message}</span>`;
 
   container.appendChild(toast);
   setTimeout(() => {
@@ -634,7 +632,7 @@ async function handleStartBatch() {
     progressPercent.textContent = "100%";
     progressText.textContent = `Batch Complete! (Run: ${summary.run_id})`;
     progressActiveFile.textContent = `Processed ${summary.total_files} documents successfully.`;
-    progressCounters.textContent = `Good: ${summary.successful} &bull; Review: ${summary.needs_review} &bull; Failed: ${summary.failed}`;
+    progressCounters.textContent = `Good: ${summary.successful} \u2022 Review: ${summary.needs_review} \u2022 Failed: ${summary.failed}`;
 
     showToast(`Batch extraction complete! ${summary.successful} Good, ${summary.needs_review} Review`, "success");
 
@@ -691,7 +689,7 @@ async function handleRunSynthetic() {
     progressPercent.textContent = "100%";
     progressText.textContent = `Benchmark Set Processed (${summary.total_files} files)`;
     progressActiveFile.textContent = `Confidence: ${(summary.average_confidence * 100).toFixed(1)}%`;
-    progressCounters.textContent = `Good: ${summary.successful} &bull; Review: ${summary.needs_review} &bull; Failed: ${summary.failed}`;
+    progressCounters.textContent = `Good: ${summary.successful} \u2022 Review: ${summary.needs_review} \u2022 Failed: ${summary.failed}`;
 
     showToast("Synthetic ground-truth extraction completed successfully.", "success");
 
@@ -952,7 +950,7 @@ window.selectReviewDocument = async function(docId, idx = -1) {
 
     document.getElementById("reviewActiveTitle").textContent = doc.filename;
     document.getElementById("reviewActiveSubtitle").textContent = 
-      `Template: ${doc.template_id} &bull; Blur: ${doc.blur_score?.toFixed(1) || 0} &bull; Brightness: ${doc.brightness?.toFixed(1) || 0} &bull; Conf: ${(doc.overall_confidence * 100).toFixed(1)}%`;
+      `Template: ${doc.template_id} \u2022 Blur: ${doc.blur_score?.toFixed(1) || 0} \u2022 Brightness: ${doc.brightness?.toFixed(1) || 0} \u2022 Conf: ${(doc.overall_confidence * 100).toFixed(1)}%`;
     
     document.getElementById("reviewBadgeContainer").innerHTML = 
       `<span class="badge ${doc.status === 'Review' ? 'badge-review' : 'badge-failed'}">${doc.status}</span>`;
@@ -1018,8 +1016,8 @@ window.selectReviewDocument = async function(docId, idx = -1) {
           </div>
 
           <div class="review-field-method">
-            Method: <strong>${ext.method || "N/A"}</strong> &bull; Raw: '<em>${ext.raw_value || ""}</em>'
-            ${ext.is_manual ? ' &bull; <span class="badge badge-manual" style="padding: 1px 5px;">MANUAL</span>' : ''}
+            Method: <strong>${ext.method || "N/A"}</strong> \u2022 Raw: '<em>${ext.raw_value || ""}</em>'
+            ${ext.is_manual ? ' \u2022 <span class="badge badge-manual" style="padding: 1px 5px;">MANUAL</span>' : ''}
           </div>
 
           ${ext.validation_notes && ext.validation_notes.length > 0 ? `
@@ -1263,7 +1261,7 @@ window.openDebugModal = async function(docId) {
     const content = document.getElementById("debugModalContent");
 
     title.textContent = `Candidate Inspector: ${doc.filename}`;
-    subtitle.textContent = `Document ID: ${doc.id} &bull; Template: ${doc.template_id} &bull; Status: ${doc.status}`;
+    subtitle.textContent = `Document ID: ${doc.id} \u2022 Template: ${doc.template_id} \u2022 Status: ${doc.status}`;
 
     content.innerHTML = `
       <!-- Quality Report Card -->
@@ -1271,7 +1269,7 @@ window.openDebugModal = async function(docId) {
         <div>
           <span style="font-size: 0.78rem; text-transform: uppercase; color: var(--text-secondary); font-weight: 600;">Quality Metrics</span>
           <div style="font-size: 0.95rem; font-weight: 600; margin-top: 2px;">
-            Blur: ${doc.blur_score?.toFixed(1) || 0} &bull; Brightness: ${doc.brightness?.toFixed(1) || 0} &bull; Contrast: ${doc.contrast?.toFixed(1) || 0}
+            Blur: ${doc.blur_score?.toFixed(1) || 0} \u2022 Brightness: ${doc.brightness?.toFixed(1) || 0} \u2022 Contrast: ${doc.contrast?.toFixed(1) || 0}
           </div>
         </div>
         <div>
@@ -1298,7 +1296,7 @@ window.openDebugModal = async function(docId) {
             </div>
 
             <div style="padding: 12px 16px; font-size: 0.82rem; color: var(--text-secondary); border-bottom: 1px solid var(--border);">
-              Selected Method: <strong>${ext.method || "N/A"}</strong> &bull; Raw OCR Text: '<code>${ext.raw_value || ""}</code>'
+              Selected Method: <strong>${ext.method || "N/A"}</strong> \u2022 Raw OCR Text: '<code>${ext.raw_value || ""}</code>'
             </div>
 
             ${ext.candidates && ext.candidates.length > 0 ? `

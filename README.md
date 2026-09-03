@@ -111,6 +111,42 @@ flowchart TD
 
 ---
 
+## Application Interface
+
+The redesigned enterprise frontend provides a clean, responsive, and 100% offline desktop dashboard for document operations.
+
+### End-to-End Extraction Workflow
+1. **Create or Select Template**: Choose an existing schema (`Electricity Bill`, `Invoice`) or define new spatial bounding boxes in the Template Calibrator.
+2. **Upload Documents**: Stage camera photographs or scans via drag-and-drop (`JPG`, `PNG`, `TIFF`, `WebP`).
+3. **Run Extraction**: Execute parallel local OCR with real-time progress indicators.
+4. **Inspect Results**: Filter documents by confidence, quality, or status, and inspect OCR candidates.
+5. **Review & Correct**: Use the dual-panel Review Queue with canvas bounding box overlays to verify and adjust low-confidence fields.
+6. **Export Multi-Sheet Excel**: Generate audit-ready `.xlsx` workbooks and flat `.csv` spreadsheets with true numeric cells.
+
+### Interface Highlights
+
+#### 1. Operations Dashboard
+*Real-time KPI metric cards, synthetic ground-truth accuracy benchmarks, and batch execution history.*
+![Dashboard](docs/screenshots/dashboard.png)
+
+#### 2. Process Documents & Ingestion
+*Drag-and-drop upload zone, multi-file staging queue with thumbnail previews, concurrency worker controls, and live extraction progress.*
+![Process Documents](docs/screenshots/process_documents.png)
+
+#### 3. Extraction Results Table
+*Structured table with real-time filename search, template and status filtering, confidence breakdown, and one-click Excel/CSV exports.*
+![Results Table](docs/screenshots/results.png)
+
+#### 4. Dual-Panel Manual Review Queue
+*Human-in-the-loop review interface featuring high-resolution canvas overlays with color-coded bounding boxes and inline field corrections.*
+![Review Queue](docs/screenshots/review_queue.png)
+
+#### 5. Visual Template Calibrator
+*Interactive canvas allowing operators to click and drag bounding boxes on sample documents to calculate normalized spatial coordinates.*
+![Template Calibrator](docs/screenshots/template_calibrator.png)
+
+---
+
 ## Benchmark Accuracy Report
 
 Evaluated against the synthetic smartphone photographic test suite (25 ground-truth documents containing real-world perspective tilts, shadows, rotations, and blur):

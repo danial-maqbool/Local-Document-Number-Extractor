@@ -22,7 +22,7 @@ from backend.config import (
 )
 from backend.models.schemas import (
     DocumentTemplate, BatchRunSummary, DocumentProcessResult,
-    ExtractionStatus
+    ExtractionStatus, ExtractedFieldResult, QualityReport, QualityStatus
 )
 from backend.services.database_service import DatabaseService
 from backend.services.batch_service import BatchService
@@ -289,10 +289,21 @@ async def export_excel(template_id: str, run_id: Optional[str] = None):
             fields = {}
             for ext in full_d.get("extractions", []):
                 val = ext.get("numeric_value") if ext.get("numeric_value") is not None else ext.get("value")
-                fields[ext["field_name"]] = DocumentProcessResult.model_construct(
-                    value=val
+                fields[ext["field_name"]] = ExtractedFieldResult.model_construct(
+                    field_name=ext["field_name"],
+                    value=val,
+                    raw_value=ext.get("raw_value", ""),
+                    confidence=float(ext.get("confidence") or 1.0),
+                    is_valid=bool(ext.get("is_valid", 1)),
+                    is_manual=bool(ext.get("is_manual", 0))
                 )
-            results.append(DocumentProcessResult(
+            q_status_str = full_d.get("quality_status", "GOOD")
+            try:
+                q_status = QualityStatus(q_status_str)
+            except Exception:
+                q_status = QualityStatus.GOOD
+
+            results.append(DocumentProcessResult.model_construct(
                 document_id=full_d["id"],
                 filename=full_d["filename"],
                 file_hash=full_d["file_hash"],
@@ -300,15 +311,15 @@ async def export_excel(template_id: str, run_id: Optional[str] = None):
                 processed_path=full_d.get("processed_path"),
                 template_id=template_id,
                 template_name=template.name,
-                quality=DocumentProcessResult.model_construct(
-                    blur_score=full_d.get("blur_score", 0.0),
-                    brightness=full_d.get("brightness", 0.0),
-                    contrast=full_d.get("contrast", 0.0),
-                    status=full_d.get("quality_status", "GOOD"),
+                quality=QualityReport.model_construct(
+                    blur_score=float(full_d.get("blur_score") or 0.0),
+                    brightness=float(full_d.get("brightness") or 0.0),
+                    contrast=float(full_d.get("contrast") or 0.0),
+                    status=q_status,
                     issues=full_d.get("issues", [])
                 ),
                 fields=fields,
-                overall_confidence=full_d["overall_confidence"],
+                overall_confidence=float(full_d.get("overall_confidence") or 0.0),
                 status=ExtractionStatus(full_d["status"]),
                 cross_field_validation_passed=bool(full_d.get("cross_field_passed", 1)),
                 validation_errors=full_d.get("validation_errors", [])
@@ -338,10 +349,21 @@ async def export_csv(template_id: str, run_id: Optional[str] = None):
             fields = {}
             for ext in full_d.get("extractions", []):
                 val = ext.get("numeric_value") if ext.get("numeric_value") is not None else ext.get("value")
-                fields[ext["field_name"]] = DocumentProcessResult.model_construct(
-                    value=val
+                fields[ext["field_name"]] = ExtractedFieldResult.model_construct(
+                    field_name=ext["field_name"],
+                    value=val,
+                    raw_value=ext.get("raw_value", ""),
+                    confidence=float(ext.get("confidence") or 1.0),
+                    is_valid=bool(ext.get("is_valid", 1)),
+                    is_manual=bool(ext.get("is_manual", 0))
                 )
-            results.append(DocumentProcessResult(
+            q_status_str = full_d.get("quality_status", "GOOD")
+            try:
+                q_status = QualityStatus(q_status_str)
+            except Exception:
+                q_status = QualityStatus.GOOD
+
+            results.append(DocumentProcessResult.model_construct(
                 document_id=full_d["id"],
                 filename=full_d["filename"],
                 file_hash=full_d["file_hash"],
@@ -349,15 +371,15 @@ async def export_csv(template_id: str, run_id: Optional[str] = None):
                 processed_path=full_d.get("processed_path"),
                 template_id=template_id,
                 template_name=template.name,
-                quality=DocumentProcessResult.model_construct(
-                    blur_score=full_d.get("blur_score", 0.0),
-                    brightness=full_d.get("brightness", 0.0),
-                    contrast=full_d.get("contrast", 0.0),
-                    status=full_d.get("quality_status", "GOOD"),
+                quality=QualityReport.model_construct(
+                    blur_score=float(full_d.get("blur_score") or 0.0),
+                    brightness=float(full_d.get("brightness") or 0.0),
+                    contrast=float(full_d.get("contrast") or 0.0),
+                    status=q_status,
                     issues=full_d.get("issues", [])
                 ),
                 fields=fields,
-                overall_confidence=full_d["overall_confidence"],
+                overall_confidence=float(full_d.get("overall_confidence") or 0.0),
                 status=ExtractionStatus(full_d["status"]),
                 cross_field_validation_passed=bool(full_d.get("cross_field_passed", 1)),
                 validation_errors=full_d.get("validation_errors", [])
