@@ -153,6 +153,34 @@ async def get_document_details(doc_id: str):
         raise HTTPException(status_code=404, detail="Document not found")
     return doc
 
+@app.get("/api/documents/{doc_id}/image")
+async def get_document_image(doc_id: str):
+    doc = db.get_document(doc_id)
+    if not doc:
+        raise HTTPException(status_code=404, detail="Document not found")
+    
+    filename = doc.get("filename", "")
+    paths_to_try = [
+        Path(doc["processed_path"]) if doc.get("processed_path") else None,
+        Path(doc["original_path"]) if doc.get("original_path") else None,
+        BASE_DIR / doc.get("original_path", ""),
+        UPLOADS_DIR / filename,
+        BASE_DIR / "sample_data" / "synthetic" / filename,
+        BASE_DIR / "real_test_docs" / filename
+    ]
+    for p in paths_to_try:
+        if p and p.is_file():
+            suffix = p.suffix.lower()
+            media_type = "image/jpeg"
+            if suffix == ".png":
+                media_type = "image/png"
+            elif suffix == ".webp":
+                media_type = "image/webp"
+            elif suffix in (".tif", ".tiff"):
+                media_type = "image/tiff"
+            return FileResponse(str(p), media_type=media_type)
+    raise HTTPException(status_code=404, detail="Document image file not found")
+
 class ManualCorrectionRequest(BaseModel):
     field_name: str
     corrected_value: Any
@@ -291,6 +319,55 @@ async def export_excel(template_id: str, run_id: Optional[str] = None):
         path=str(file_path),
         filename=file_path.name,
         media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    )
+
+@app.get("/api/export/csv/{template_id}")
+async def export_csv(template_id: str, run_id: Optional[str] = None):
+    t_file = TEMPLATES_DIR / f"{template_id}.json"
+    if not t_file.exists():
+        raise HTTPException(status_code=404, detail="Template not found")
+
+    with open(t_file, "r", encoding="utf-8-sig") as f:
+        template = DocumentTemplate(**json.load(f))
+
+    docs = db.list_documents(run_id=run_id)
+    results: List[DocumentProcessResult] = []
+    for d in docs:
+        full_d = db.get_document(d["id"])
+        if full_d:
+            fields = {}
+            for ext in full_d.get("extractions", []):
+                val = ext.get("numeric_value") if ext.get("numeric_value") is not None else ext.get("value")
+                fields[ext["field_name"]] = DocumentProcessResult.model_construct(
+                    value=val
+                )
+            results.append(DocumentProcessResult(
+                document_id=full_d["id"],
+                filename=full_d["filename"],
+                file_hash=full_d["file_hash"],
+                original_path=full_d["original_path"],
+                processed_path=full_d.get("processed_path"),
+                template_id=template_id,
+                template_name=template.name,
+                quality=DocumentProcessResult.model_construct(
+                    blur_score=full_d.get("blur_score", 0.0),
+                    brightness=full_d.get("brightness", 0.0),
+                    contrast=full_d.get("contrast", 0.0),
+                    status=full_d.get("quality_status", "GOOD"),
+                    issues=full_d.get("issues", [])
+                ),
+                fields=fields,
+                overall_confidence=full_d["overall_confidence"],
+                status=ExtractionStatus(full_d["status"]),
+                cross_field_validation_passed=bool(full_d.get("cross_field_passed", 1)),
+                validation_errors=full_d.get("validation_errors", [])
+            ))
+
+    file_path = ExcelService.export_results_to_csv(results, template)
+    return FileResponse(
+        path=str(file_path),
+        filename=file_path.name,
+        media_type="text/csv"
     )
 
 @app.get("/api/benchmark/report")

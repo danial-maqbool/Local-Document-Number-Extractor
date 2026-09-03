@@ -3,351 +3,805 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Local Document Number Extractor</title>
+  <title>Local Document Number Extractor - Enterprise Dashboard</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Left Sidebar -->
-  <aside class="sidebar">
-    <div class="brand">
-      <h1>
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" width="24" height="24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-        </svg>
-        DocExtractor
-      </h1>
-      <span class="brand-badge">100% Local &bull; No Cloud</span>
-    </div>
+  <div class="app-shell">
+    <!-- Mobile Sidebar Backdrop -->
+    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
 
-    <ul class="nav-links">
-      <li><button class="nav-btn active" data-tab="dashboard">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-        Dashboard
-      </button></li>
+    <!-- Fixed Left Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="brand-container">
+          <div class="brand-icon-box">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+          </div>
+          <div>
+            <div class="brand-title">DocExtractor</div>
+            <div class="brand-subtitle">LOCAL PROCESSING</div>
+          </div>
+        </div>
 
-      <li><button class="nav-btn" data-tab="process">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
-        Process Documents
-      </button></li>
-
-      <li><button class="nav-btn" data-tab="results">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 4h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-        Results Table
-      </button></li>
-
-      <li><button class="nav-btn" data-tab="review">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-        Review Queue
-      </button></li>
-
-      <li><button class="nav-btn" data-tab="calibrate">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path></svg>
-        Template Calibrator
-      </button></li>
-
-      <li><button class="nav-btn" data-tab="templates">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-        Templates & Fields
-      </button></li>
-
-      <li><button class="nav-btn" data-tab="settings">
-        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-        Settings
-      </button></li>
-    </ul>
-  </aside>
-
-  <!-- Main View Area -->
-  <main class="main-wrapper">
-    <header class="top-bar">
-      <h2 class="page-title" id="pageTitle">Dashboard</h2>
-      <div class="status-pill">
-        <span class="status-dot"></span>
-        <span id="hardwareStatus">Device: CUDA (RTX 4060) &bull; Offline Mode</span>
+        <div class="telemetry-pills">
+          <div class="sidebar-pill">
+            <span class="status-dot dot-green"></span>
+            <span>100% Offline Capable</span>
+          </div>
+          <div class="sidebar-pill">
+            <span class="status-dot dot-blue"></span>
+            <span id="sidebarHwStatus">CUDA: Detecting...</span>
+          </div>
+        </div>
       </div>
-    </header>
 
-    <div class="content-container">
+      <!-- Navigation Links -->
+      <ul class="nav-links">
+        <li class="nav-item">
+          <button class="nav-btn active" data-tab="dashboard">
+            <svg class="nav-icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+            </svg>
+            <span>Dashboard</span>
+          </button>
+        </li>
 
-      <!-- TAB 1: DASHBOARD -->
-      <section id="tab-dashboard" class="tab-pane active">
-        <div class="grid-4">
+        <li class="nav-item">
+          <button class="nav-btn" data-tab="process">
+            <svg class="nav-icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path>
+            </svg>
+            <span>Process Documents</span>
+          </button>
+        </li>
+
+        <li class="nav-item">
+          <button class="nav-btn" data-tab="results">
+            <svg class="nav-icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 4h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+            <span>Results</span>
+          </button>
+        </li>
+
+        <li class="nav-item">
+          <button class="nav-btn" data-tab="review">
+            <svg class="nav-icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+            </svg>
+            <span>Review Queue</span>
+          </button>
+        </li>
+
+        <li class="nav-item">
+          <button class="nav-btn" data-tab="calibrate">
+            <svg class="nav-icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path>
+            </svg>
+            <span>Template Calibrator</span>
+          </button>
+        </li>
+
+        <li class="nav-item">
+          <button class="nav-btn" data-tab="templates">
+            <svg class="nav-icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+            </svg>
+            <span>Templates & Fields</span>
+          </button>
+        </li>
+
+        <li class="nav-item">
+          <button class="nav-btn" data-tab="settings">
+            <svg class="nav-icon" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+            <span>Settings</span>
+          </button>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <span>v1.0.0 Enterprise</span>
+        <span>Deterministic OCR</span>
+      </div>
+    </aside>
+
+    <!-- Main View Area -->
+    <main class="main-wrapper">
+      <!-- Top Bar -->
+      <header class="top-bar">
+        <div class="topbar-left">
+          <button class="mobile-menu-toggle" id="mobileMenuBtn" aria-label="Toggle Navigation">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+          <div class="topbar-title-group">
+            <h2 class="page-title" id="pageTitle">Dashboard</h2>
+            <span class="page-description" id="pageDescription">Local OCR processing overview and telemetry</span>
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <div class="telemetry-chip">
+            <span class="chip-dot blue"></span>
+            <span id="topbarHwBadge">CUDA: RTX 4060</span>
+          </div>
+          <div class="telemetry-chip">
+            <span class="chip-dot green"></span>
+            <span>100% Local &bull; Offline</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content Container -->
+      <div class="content-container">
+
+        <!-- =================================================================
+             TAB 1: DASHBOARD
+             ================================================================= -->
+        <section id="tab-dashboard" class="tab-pane active">
+          <!-- 4 KPI Cards -->
+          <div class="kpi-grid">
+            <div class="kpi-card">
+              <div class="kpi-top">
+                <span class="kpi-label">Total Documents</span>
+                <div class="kpi-icon-box kpi-icon-blue">
+                  <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                  </svg>
+                </div>
+              </div>
+              <div class="kpi-value" id="statTotal">0</div>
+              <div class="kpi-subtext">Processed across all runs</div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-top">
+                <span class="kpi-label">Successful</span>
+                <div class="kpi-icon-box kpi-icon-green">
+                  <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                </div>
+              </div>
+              <div class="kpi-value" id="statGood" style="color: var(--success);">0</div>
+              <div class="kpi-subtext">Passed confidence & validation</div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-top">
+                <span class="kpi-label">Needs Review</span>
+                <div class="kpi-icon-box kpi-icon-amber">
+                  <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                  </svg>
+                </div>
+              </div>
+              <div class="kpi-value" id="statReview" style="color: var(--warning);">0</div>
+              <div class="kpi-subtext">Requires operator audit</div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-top">
+                <span class="kpi-label">Failed</span>
+                <div class="kpi-icon-box kpi-icon-red">
+                  <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                </div>
+              </div>
+              <div class="kpi-value" id="statFailed" style="color: var(--danger);">0</div>
+              <div class="kpi-subtext">Low quality or parse failure</div>
+            </div>
+          </div>
+
+          <!-- Processing Accuracy Section -->
           <div class="card">
-            <div class="card-title">Total Documents</div>
-            <div class="card-value" id="statTotal">0</div>
-            <div class="card-subtext">Processed across all runs</div>
-          </div>
-          <div class="card">
-            <div class="card-title">Successful (Good)</div>
-            <div class="card-value" id="statGood" style="color: var(--success);">0</div>
-            <div class="card-subtext">Passed confidence & rules</div>
-          </div>
-          <div class="card">
-            <div class="card-title">Needs Review</div>
-            <div class="card-value" id="statReview" style="color: var(--warning);">0</div>
-            <div class="card-subtext">Requires human audit</div>
-          </div>
-          <div class="card">
-            <div class="card-title">Failed / Corrupt</div>
-            <div class="card-value" id="statFailed" style="color: var(--danger);">0</div>
-            <div class="card-subtext">Quality or parse failure</div>
-          </div>
-        </div>
-
-        <div class="card" style="margin-top: 24px;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-            <h3 style="font-size: 1.05rem; font-weight: 600;">System Accuracy Benchmark</h3>
-            <button class="btn btn-secondary" id="btnRefreshBenchmark">Reload Benchmark</button>
-          </div>
-          <div class="grid-4" id="benchmarkMetrics">
-            <div>
-              <div class="card-title">Field Accuracy</div>
-              <div class="card-value" id="bmFieldAcc">--</div>
-            </div>
-            <div>
-              <div class="card-title">Char Accuracy</div>
-              <div class="card-value" id="bmCharAcc">--</div>
-            </div>
-            <div>
-              <div class="card-title">Document Accuracy</div>
-              <div class="card-value" id="bmDocAcc">--</div>
-            </div>
-            <div>
-              <div class="card-title">False Extraction</div>
-              <div class="card-value" id="bmFalseExt">--</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card" style="margin-top: 24px;">
-          <h3 style="font-size: 1.05rem; font-weight: 600; margin-bottom: 16px;">Recent Processing Batches</h3>
-          <div class="table-container">
-            <table id="runsTable">
-              <thead>
-                <tr>
-                  <th>Run ID</th>
-                  <th>Template</th>
-                  <th>Total Files</th>
-                  <th>Good</th>
-                  <th>Review</th>
-                  <th>Failed</th>
-                  <th>Avg Confidence</th>
-                  <th>Start Time</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><td colspan="8" style="text-align:center; color: var(--text-muted);">No runs recorded yet.</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <!-- TAB 2: PROCESS DOCUMENTS -->
-      <section id="tab-process" class="tab-pane">
-        <div class="card">
-          <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 16px;">Run Local Batch Extraction</h3>
-          <div style="display: flex; gap: 20px; margin-bottom: 20px;">
-            <div style="flex: 1;">
-              <label style="display:block; margin-bottom: 6px; font-size: 0.85rem; color: var(--text-secondary);">Select Document Template</label>
-              <select id="processTemplateSelect" style="width: 100%; padding: 10px; border-radius: 8px; background: var(--bg-main); border: 1px solid var(--border); color: #fff;"></select>
-            </div>
-            <div style="width: 200px;">
-              <label style="display:block; margin-bottom: 6px; font-size: 0.85rem; color: var(--text-secondary);">Workers (Concurrency)</label>
-              <input type="number" id="processWorkers" value="2" min="1" max="4" style="width: 100%; padding: 10px; border-radius: 8px; background: var(--bg-main); border: 1px solid var(--border); color: #fff;">
-            </div>
-          </div>
-
-          <div class="upload-zone" id="uploadZone">
-            <svg class="upload-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-            <h4 style="font-size: 1rem; margin-bottom: 6px;">Drop document images here or click to select</h4>
-            <p style="font-size: 0.82rem; color: var(--text-secondary);">Supports JPG, PNG, TIFF, BMP, WebP</p>
-            <input type="file" id="filePicker" multiple accept="image/*" style="display: none;">
-          </div>
-
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
-            <div id="fileSelectedCount" style="font-size: 0.9rem; color: var(--text-secondary);">No files selected</div>
-            <div style="display: flex; gap: 12px;">
-              <button class="btn btn-secondary" id="btnTestSynthetic">Run Synthetic Benchmark Set</button>
-              <button class="btn btn-primary" id="btnStartBatch">Start Local Extraction</button>
-            </div>
-          </div>
-
-          <div id="progressSection" style="margin-top: 24px; display: none;">
-            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 6px;">
-              <span id="progressText">Processing batch...</span>
-              <span id="progressPercent">0%</span>
-            </div>
-            <div style="height: 8px; background: var(--border); border-radius: 4px; overflow: hidden;">
-              <div id="progressBar" style="height: 100%; width: 0%; background: var(--accent); transition: width 0.2s;"></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- TAB 3: RESULTS TABLE -->
-      <section id="tab-results" class="tab-pane">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-          <div style="display: flex; gap: 12px; align-items: center;">
-            <input type="text" id="searchDocs" placeholder="Search filename..." style="padding: 8px 14px; border-radius: 8px; background: var(--bg-card); border: 1px solid var(--border); color: #fff; width: 240px;">
-            <select id="filterStatus" style="padding: 8px 14px; border-radius: 8px; background: var(--bg-card); border: 1px solid var(--border); color: #fff;">
-              <option value="">All Statuses</option>
-              <option value="Good">Good</option>
-              <option value="Review">Needs Review</option>
-              <option value="Failed">Failed</option>
-            </select>
-          </div>
-          <div style="display: flex; gap: 10px;">
-            <button class="btn btn-success" id="btnExportExcel">Export Excel (.xlsx)</button>
-            <button class="btn btn-secondary" id="btnExportCSV">Export CSV</button>
-          </div>
-        </div>
-
-        <div class="table-container">
-          <table id="documentsTable">
-            <thead>
-              <tr id="docTableHead">
-                <th>Filename</th>
-                <th>Status</th>
-                <th>Confidence</th>
-                <th>Blur Score</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="docTableBody">
-              <tr><td colspan="5" style="text-align: center; color: var(--text-muted);">No documents loaded.</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <!-- TAB 4: MANUAL REVIEW QUEUE -->
-      <section id="tab-review" class="tab-pane">
-        <div style="display: flex; gap: 24px; height: calc(100vh - 160px);">
-          <!-- Review Document List -->
-          <div style="width: 320px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; overflow-y: auto;">
-            <h4 style="font-size: 0.95rem; margin-bottom: 12px; color: var(--text-secondary);">Items Requiring Audit</h4>
-            <div id="reviewItemsList" style="display: flex; flex-direction: column; gap: 8px;"></div>
-          </div>
-
-          <!-- Document Inspector Canvas & Fields -->
-          <div style="flex: 1; display: flex; flex-direction: column; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden;">
-            <div style="padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+            <div class="card-header">
               <div>
-                <h4 id="reviewActiveTitle" style="font-size: 1rem;">Select a document to review</h4>
-                <p id="reviewActiveSubtitle" style="font-size: 0.8rem; color: var(--text-muted);"></p>
+                <h3 class="card-title-lg">Processing Accuracy</h3>
+                <p class="card-subtitle">Deterministic extraction benchmarks against synthetic ground truth</p>
               </div>
-              <div id="reviewBadgeContainer"></div>
+              <button class="btn btn-secondary btn-sm" id="btnRefreshBenchmark">
+                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                </svg>
+                <span>Reload Benchmark</span>
+              </button>
             </div>
 
-            <div style="flex: 1; display: flex; overflow: hidden;">
-              <!-- Image viewer with canvas -->
-              <div style="flex: 1; background: #000; display: flex; align-items: center; justify-content: center; overflow: auto; position: relative;">
-                <canvas id="reviewCanvas" style="max-width: 100%; max-height: 100%;"></canvas>
+            <div class="accuracy-grid" id="benchmarkMetrics">
+              <div class="accuracy-item">
+                <div class="accuracy-item-label">Field Accuracy</div>
+                <div class="accuracy-item-val" id="bmFieldAcc">Not evaluated</div>
+                <div class="progress-track"><div class="progress-fill" id="bmFieldAccBar" style="width: 0%;"></div></div>
+              </div>
+              <div class="accuracy-item">
+                <div class="accuracy-item-label">Character Accuracy</div>
+                <div class="accuracy-item-val" id="bmCharAcc">Not evaluated</div>
+                <div class="progress-track"><div class="progress-fill" id="bmCharAccBar" style="width: 0%;"></div></div>
+              </div>
+              <div class="accuracy-item">
+                <div class="accuracy-item-label">Document Accuracy</div>
+                <div class="accuracy-item-val" id="bmDocAcc">Not evaluated</div>
+                <div class="progress-track"><div class="progress-fill" id="bmDocAccBar" style="width: 0%;"></div></div>
+              </div>
+              <div class="accuracy-item">
+                <div class="accuracy-item-label">False Extraction Rate</div>
+                <div class="accuracy-item-val" id="bmFalseExt">Not evaluated</div>
+                <div class="progress-track"><div class="progress-fill" id="bmFalseExtBar" style="width: 0%; background-color: var(--warning);"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Processing Batches Table -->
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h3 class="card-title-lg">Recent Processing Runs</h3>
+                <p class="card-subtitle">History of executed document extraction batches</p>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="document.querySelector('[data-tab=\'process\']').click()">
+                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+                <span>Process Documents</span>
+              </button>
+            </div>
+
+            <div class="table-container">
+              <table id="runsTable">
+                <thead>
+                  <tr>
+                    <th>Run ID</th>
+                    <th>Template</th>
+                    <th>Files</th>
+                    <th>Good</th>
+                    <th>Review</th>
+                    <th>Failed</th>
+                    <th>Avg Confidence</th>
+                    <th>Started</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="runsTableBody">
+                  <tr>
+                    <td colspan="9">
+                      <div class="empty-state">
+                        <svg class="empty-state-icon" width="48" height="48" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                        </svg>
+                        <div class="empty-state-title">No Processing Runs Yet</div>
+                        <div class="empty-state-desc">Upload documents and run an extraction batch to populate telemetry.</div>
+                        <button class="btn btn-primary btn-sm" onclick="document.querySelector('[data-tab=\'process\']').click()">Start First Extraction</button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================================
+             TAB 2: PROCESS DOCUMENTS
+             ================================================================= -->
+        <section id="tab-process" class="tab-pane">
+          <div class="upload-card">
+            <div class="card-header no-border">
+              <div>
+                <h3 class="card-title-lg">Batch Document Extraction</h3>
+                <p class="card-subtitle">Select document template, upload bill or invoice files, and execute 100% local OCR extraction.</p>
+              </div>
+            </div>
+
+            <!-- Workflow Form Controls -->
+            <div class="grid-2" style="margin-bottom: 20px;">
+              <div class="form-group">
+                <label class="form-label" for="processTemplateSelect">Document Template</label>
+                <select class="form-select" id="processTemplateSelect"></select>
+                <span class="form-hint">Defines target numeric fields and spatial/label boundaries</span>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="processWorkers">Concurrent Workers (1&ndash;8)</label>
+                <input type="number" class="form-control" id="processWorkers" value="2" min="1" max="8">
+                <span class="form-hint">Parallel OCR workers utilizing local GPU or CPU threads</span>
+              </div>
+            </div>
+
+            <!-- Drag & Drop Upload Zone (Explicit 52px Icon) -->
+            <div class="upload-zone" id="uploadZone">
+              <svg class="upload-icon" width="52" height="52" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+              </svg>
+              <div class="upload-title">Drop documents here or Browse Files</div>
+              <div class="upload-subtitle">Select images directly from local storage. Processing remains 100% offline.</div>
+              <div class="format-tags">
+                <span class="format-tag">JPG</span>
+                <span class="format-tag">JPEG</span>
+                <span class="format-tag">PNG</span>
+                <span class="format-tag">TIFF</span>
+                <span class="format-tag">WebP</span>
+              </div>
+              <input type="file" id="filePicker" multiple accept="image/jpeg,image/png,image/tiff,image/webp,image/bmp" style="display: none;">
+            </div>
+
+            <!-- Selected Files Queue -->
+            <div class="selected-files-card" id="selectedFilesSection" style="display: none;">
+              <div class="selected-files-header">
+                <span id="fileSelectedCount">0 files staged</span>
+                <button class="btn btn-ghost btn-sm" id="btnClearFiles">Clear Selection</button>
+              </div>
+              <div class="selected-files-list" id="selectedFilesList"></div>
+            </div>
+
+            <!-- Action Controls Row -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border);">
+              <button class="btn btn-secondary" id="btnTestSynthetic">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                </svg>
+                <span>Run Synthetic Benchmark</span>
+              </button>
+
+              <button class="btn btn-primary btn-lg" id="btnStartBatch">
+                <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span>Start Extraction</span>
+              </button>
+            </div>
+
+            <!-- Processing Progress Panel -->
+            <div class="progress-panel" id="progressSection" style="display: none;">
+              <div class="progress-header">
+                <span class="progress-title" id="progressText">
+                  <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="animation: spin 1s linear infinite;">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                  </svg>
+                  Processing documents...
+                </span>
+                <span class="progress-percent-text" id="progressPercent">0%</span>
+              </div>
+              <div class="progress-bar-track">
+                <div class="progress-bar-fill" id="progressBar" style="width: 0%;"></div>
+              </div>
+              <div class="progress-stats-row">
+                <span id="progressActiveFile">Preparing pipeline...</span>
+                <span id="progressCounters">Good: 0 &bull; Review: 0 &bull; Failed: 0</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================================
+             TAB 3: RESULTS TABLE
+             ================================================================= -->
+        <section id="tab-results" class="tab-pane">
+          <div class="card">
+            <!-- Filter & Action Bar -->
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 20px; flex-wrap: wrap;">
+              <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap; flex: 1;">
+                <div style="position: relative; width: 240px;">
+                  <input type="text" id="searchDocs" class="form-control" placeholder="Search filename..." style="padding-left: 34px;">
+                  <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="position: absolute; left: 10px; top: 11px; color: var(--text-muted);">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                  </svg>
+                </div>
+
+                <select id="filterTemplate" class="form-select" style="width: 170px;">
+                  <option value="">All Templates</option>
+                </select>
+
+                <select id="filterStatus" class="form-select" style="width: 150px;">
+                  <option value="">All Statuses</option>
+                  <option value="Good">Good</option>
+                  <option value="Review">Needs Review</option>
+                  <option value="Failed">Failed</option>
+                </select>
+
+                <select id="filterConfidence" class="form-select" style="width: 170px;">
+                  <option value="">All Confidence</option>
+                  <option value="high">&ge; 90% High</option>
+                  <option value="med">70% &ndash; 89% Medium</option>
+                  <option value="low">&lt; 70% Low</option>
+                </select>
               </div>
 
-              <!-- Field correction form -->
-              <div style="width: 380px; border-left: 1px solid var(--border); padding: 20px; overflow-y: auto;">
-                <h4 style="font-size: 0.95rem; margin-bottom: 16px;">Extracted Numeric Fields</h4>
-                <div id="reviewFieldsForm" style="display: flex; flex-direction: column; gap: 16px;">
-                  <p style="color: var(--text-muted); font-size: 0.85rem;">No active document selected.</p>
+              <!-- Export Buttons Area -->
+              <div style="display: flex; gap: 10px;">
+                <button class="btn btn-success" id="btnExportExcel">
+                  <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                  </svg>
+                  <span>Export Excel</span>
+                </button>
+
+                <button class="btn btn-secondary" id="btnExportCSV">
+                  <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                  </svg>
+                  <span>Export CSV</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Results Table -->
+            <div class="table-container">
+              <table id="documentsTable">
+                <thead>
+                  <tr id="docTableHead">
+                    <th>Document</th>
+                    <th>Template</th>
+                    <th>Extracted Fields</th>
+                    <th>Confidence</th>
+                    <th>Quality</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="docTableBody">
+                  <tr>
+                    <td colspan="7">
+                      <div class="empty-state">
+                        <svg class="empty-state-icon" width="48" height="48" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                        </svg>
+                        <div class="empty-state-title">No Documents Found</div>
+                        <div class="empty-state-desc">Upload documents in the Process tab to view extraction results.</div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- =================================================================
+             TAB 4: MANUAL REVIEW QUEUE
+             ================================================================= -->
+        <section id="tab-review" class="tab-pane">
+          <div class="review-workspace">
+            <!-- Left Queue Panel -->
+            <div class="review-list-panel">
+              <div class="review-list-header">
+                <div>
+                  <h4 style="font-size: 0.92rem; font-weight: 600;">Requiring Review</h4>
+                  <span style="font-size: 0.75rem; color: var(--text-secondary);" id="reviewQueueCount">0 items pending</span>
+                </div>
+                <span class="badge badge-review" id="reviewBadgeCount">0</span>
+              </div>
+              <div class="review-items-scroll" id="reviewItemsList">
+                <div class="empty-state" style="padding: 32px 12px;">
+                  <svg class="empty-state-icon" width="36" height="36" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                  </svg>
+                  <div class="empty-state-title" style="font-size: 0.88rem;">Review Queue Empty</div>
+                  <div class="empty-state-desc" style="font-size: 0.78rem;">All documents passed validation.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Document Inspector Panel -->
+            <div class="review-inspector-panel">
+              <div class="review-inspector-header">
+                <div>
+                  <h4 id="reviewActiveTitle" style="font-size: 1rem; font-weight: 600;">Select a document to review</h4>
+                  <p id="reviewActiveSubtitle" style="font-size: 0.8rem; color: var(--text-secondary);">Quality telemetry and confidence report</p>
+                </div>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                  <div id="reviewBadgeContainer"></div>
+                  <button class="btn btn-secondary btn-sm" id="btnSkipReview">Skip</button>
+                  <button class="btn btn-success btn-sm" id="btnApproveDoc">
+                    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    <span>Approve Document</span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="review-inspector-body">
+                <!-- Canvas Viewport -->
+                <div class="canvas-viewport" id="reviewCanvasContainer">
+                  <canvas id="reviewCanvas"></canvas>
+                </div>
+
+                <!-- Fields Sidebar -->
+                <div class="review-fields-sidebar">
+                  <div class="review-fields-header">Extracted Fields & Verification</div>
+                  <div class="review-fields-scroll" id="reviewFieldsForm">
+                    <div class="empty-state" style="padding: 40px 16px;">
+                      <div class="empty-state-title">No Document Selected</div>
+                      <div class="empty-state-desc">Click on an item from the review queue to inspect extracted values and bounding boxes.</div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- TAB 5: TEMPLATE CALIBRATION TOOL -->
-      <section id="tab-calibrate" class="tab-pane">
-        <div class="card">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-            <div>
-              <h3 style="font-size: 1.1rem; font-weight: 600;">Visual Template Calibrator</h3>
-              <p style="font-size: 0.85rem; color: var(--text-secondary);">Click & drag on a sample image to define a high-precision field bounding box</p>
-            </div>
-            <div style="display: flex; gap: 12px;">
-              <input type="file" id="calibImagePicker" accept="image/*" style="display:none;">
-              <button class="btn btn-secondary" onclick="document.getElementById('calibImagePicker').click()">Upload Sample Image</button>
-            </div>
-          </div>
-
-          <div style="display: flex; gap: 24px;">
-            <div style="flex: 1; background: #000; border-radius: 8px; display: flex; align-items: center; justify-content: center; min-height: 480px; overflow: auto;">
-              <canvas id="calibrationCanvas"></canvas>
-            </div>
-
-            <div style="width: 320px; display: flex; flex-direction: column; gap: 16px;">
+        <!-- =================================================================
+             TAB 5: TEMPLATE CALIBRATOR
+             ================================================================= -->
+        <section id="tab-calibrate" class="tab-pane">
+          <div class="card">
+            <div class="card-header">
               <div>
-                <label style="display:block; font-size: 0.85rem; margin-bottom: 6px; color: var(--text-secondary);">Field Name</label>
-                <input type="text" id="calibFieldName" placeholder="e.g. Total Amount" style="width: 100%; padding: 10px; border-radius: 8px; background: var(--bg-main); border: 1px solid var(--border); color: #fff;">
+                <h3 class="card-title-lg">Visual Template Calibrator</h3>
+                <p class="card-subtitle">Upload sample document, draw bounding box rectangles, and extract precise normalized coordinates.</p>
+              </div>
+              <div style="display: flex; gap: 10px;">
+                <input type="file" id="calibImagePicker" accept="image/*" style="display:none;">
+                <button class="btn btn-secondary" onclick="document.getElementById('calibImagePicker').click()">
+                  <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                  </svg>
+                  <span>Upload Sample Document</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="calibrator-workspace">
+              <!-- Interactive Canvas Area -->
+              <div class="calibrator-canvas-area" id="calibCanvasContainer">
+                <canvas id="calibrationCanvas"></canvas>
               </div>
 
-              <div>
-                <label style="display:block; font-size: 0.85rem; margin-bottom: 6px; color: var(--text-secondary);">Normalized Bounding Box</label>
-                <div style="background: var(--bg-main); padding: 12px; border-radius: 8px; border: 1px solid var(--border); font-family: monospace; font-size: 0.85rem;">
-                  <div>x_min: <span id="calibXMin">0.000</span></div>
-                  <div>y_min: <span id="calibYMin">0.000</span></div>
-                  <div>x_max: <span id="calibXMax">0.000</span></div>
-                  <div>y_max: <span id="calibYMax">0.000</span></div>
+              <!-- Side Field Configuration Panel -->
+              <div class="calibrator-sidebar">
+                <div class="form-group">
+                  <label class="form-label" for="calibTemplateSelect">Target Template</label>
+                  <select class="form-select" id="calibTemplateSelect"></select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="calibFieldName">Field Name</label>
+                  <input type="text" class="form-control" id="calibFieldName" placeholder="e.g. Total Amount Payable">
+                </div>
+
+                <div class="grid-2">
+                  <div class="form-group">
+                    <label class="form-label" for="calibFieldType">Field Type</label>
+                    <select class="form-select" id="calibFieldType">
+                      <option value="decimal">Decimal</option>
+                      <option value="integer">Integer</option>
+                      <option value="date">Date</option>
+                      <option value="phone">Phone</option>
+                      <option value="code">Code</option>
+                    </select>
+                  </div>
+                  <div class="form-group" style="justify-content: flex-end; padding-bottom: 8px;">
+                    <label class="form-check">
+                      <input type="checkbox" id="calibRequired" checked>
+                      <span>Required Field</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="calibEnglishLabels">English Labels (comma separated)</label>
+                  <input type="text" class="form-control" id="calibEnglishLabels" placeholder="e.g. Total, Amount Payable, Net Bill">
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="calibUrduLabels">Urdu Labels (comma separated)</label>
+                  <input type="text" class="form-control" id="calibUrduLabels" placeholder="e.g. کل رقم, واجب الادا رقم">
+                </div>
+
+                <div class="grid-2">
+                  <div class="form-group">
+                    <label class="form-label" for="calibMinDigits">Min Digits</label>
+                    <input type="number" class="form-control" id="calibMinDigits" placeholder="e.g. 3">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="calibMaxDigits">Max Digits</label>
+                    <input type="number" class="form-control" id="calibMaxDigits" placeholder="e.g. 10">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Normalized Bounding Box Coordinates</label>
+                  <div class="coord-display-box">
+                    <div>x_min: <span id="calibXMin">0.000</span></div>
+                    <div>y_min: <span id="calibYMin">0.000</span></div>
+                    <div>x_max: <span id="calibXMax">0.000</span></div>
+                    <div>y_max: <span id="calibYMax">0.000</span></div>
+                  </div>
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-top: 8px;">
+                  <button class="btn btn-secondary" id="btnResetCalib" style="flex: 1;">Reset Box</button>
+                  <button class="btn btn-primary" id="btnApplyCalibration" style="flex: 2;">Add Field to Template</button>
                 </div>
               </div>
-
-              <button class="btn btn-primary" id="btnApplyCalibration">Add Region to Template</button>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- TAB 6: TEMPLATES & FIELDS -->
-      <section id="tab-templates" class="tab-pane">
-        <div class="card">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-            <h3 style="font-size: 1.1rem; font-weight: 600;">Active Document Templates</h3>
-            <button class="btn btn-primary" id="btnNewTemplate">+ New Template</button>
+        <!-- =================================================================
+             TAB 6: TEMPLATES & FIELDS
+             ================================================================= -->
+        <section id="tab-templates" class="tab-pane">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h3 class="card-title-lg">Document Templates</h3>
+                <p class="card-subtitle">Manage extraction schemas, spatial regions, and deterministic validation rules.</p>
+              </div>
+              <button class="btn btn-primary" id="btnNewTemplate">
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+                <span>+ New Template</span>
+              </button>
+            </div>
+
+            <div id="templatesListContainer" style="display: flex; flex-direction: column; gap: 16px;"></div>
           </div>
-          <div id="templatesListContainer" style="display: flex; flex-direction: column; gap: 16px;"></div>
-        </div>
-      </section>
+        </section>
 
-      <!-- TAB 7: SETTINGS -->
-      <section id="tab-settings" class="tab-pane">
-        <div class="card">
-          <h3 style="font-size: 1.1rem; font-weight: 600; margin-bottom: 16px;">System & Engine Settings</h3>
+        <!-- =================================================================
+             TAB 7: SETTINGS
+             ================================================================= -->
+        <section id="tab-settings" class="tab-pane">
           <div class="grid-2">
-            <div>
-              <h4 style="font-size: 0.95rem; margin-bottom: 10px; color: var(--text-secondary);">Local Quality Thresholds</h4>
-              <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px;">Blur Score Review Limit: &lt; 60 (Laplacian Variance)</p>
-              <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px;">Blur Score Fail Limit: &lt; 30</p>
-              <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px;">Brightness Boundaries: 40 - 230</p>
-              <p style="font-size: 0.85rem; color: var(--text-muted);">Contrast Minimum: 25.0</p>
+            <!-- OCR Engine Card -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title-lg">OCR Engine & Hardware</h3>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 14px;">
+                <div>
+                  <div class="form-label">OCR Recognition Engine</div>
+                  <div style="font-weight: 600; color: var(--text-primary); margin-top: 2px;">EasyOCR (PyTorch CRAFT + ResNet)</div>
+                  <div class="form-hint">CRAFT character-region detector coupled with bidirectional LSTM ResNet recognizer.</div>
+                </div>
+                <div>
+                  <div class="form-label">Active Languages</div>
+                  <div style="font-weight: 600; color: var(--text-primary); margin-top: 2px;">English ('en') &bull; Urdu ('ur')</div>
+                  <div class="form-hint">Multilingual character mappings loaded 100% locally from disk models.</div>
+                </div>
+                <div>
+                  <div class="form-label">Compute Acceleration Device</div>
+                  <div style="font-weight: 600; color: var(--primary); margin-top: 2px;" id="settingsDeviceText">CUDA Acceleration (RTX 4060)</div>
+                  <div class="form-hint">Zero external API dependencies. All inference executes on local hardware.</div>
+                </div>
+                <div>
+                  <div class="form-label">Numeric OCR Whitelist</div>
+                  <code style="background: var(--surface-muted); padding: 4px 8px; border-radius: 4px; border: 1px solid var(--border); display: inline-block; margin-top: 4px;">0123456789.,-/: </code>
+                </div>
+              </div>
             </div>
-            <div>
-              <h4 style="font-size: 0.95rem; margin-bottom: 10px; color: var(--text-secondary);">OCR Whitelist & Hardware</h4>
-              <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px;">Engine: EasyOCR (PyTorch CRAFT + ResNet recognition)</p>
-              <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px;">Languages: English ('en'), Urdu ('ur')</p>
-              <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px;">Numeric Whitelist: '0123456789.,-/: '</p>
-              <p style="font-size: 0.85rem; color: var(--text-muted);">Ambiguity Delta Threshold: 0.08</p>
+
+            <!-- Image Quality Settings Card -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title-lg">Quality & Blur Boundaries</h3>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 14px;">
+                <div>
+                  <div class="form-label">Review Blur Threshold: &lt; 60.0</div>
+                  <div class="form-hint">Calculated via variance of the Laplacian kernel. Documents below 60.0 are routed to the Review Queue.</div>
+                </div>
+                <div>
+                  <div class="form-label">Failure Blur Threshold: &lt; 30.0</div>
+                  <div class="form-hint">Extremely unreadable/corrupted captures are marked FAILED immediately to avoid OCR hallucinations.</div>
+                </div>
+                <div>
+                  <div class="form-label">Brightness Bounds: 40 &ndash; 230</div>
+                  <div class="form-hint">Mean pixel luminance checks. Under 40 (underexposed) or over 230 (blown out) trigger audit flags.</div>
+                </div>
+                <div>
+                  <div class="form-label">Contrast Minimum: 25.0</div>
+                  <div class="form-hint">Standard deviation of grayscale intensities ensuring readable ink contrast.</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Extraction Parameters Card -->
+            <div class="card" style="grid-column: span 2;">
+              <div class="card-header">
+                <h3 class="card-title-lg">Extraction & Ambiguity Parameters</h3>
+              </div>
+              <div class="grid-3">
+                <div>
+                  <div class="form-label">Ambiguity Delta Threshold: 0.08</div>
+                  <div class="form-hint">If top two candidates differ by &le; 0.08 confidence, document is flagged for review.</div>
+                </div>
+                <div>
+                  <div class="form-label">Minimum Confidence: 0.70</div>
+                  <div class="form-hint">Fields extracted with overall confidence &lt; 0.70 fail validation and require approval.</div>
+                </div>
+                <div>
+                  <div class="form-label">Geometry Proximity Algorithm</div>
+                  <div class="form-hint">Evaluates fixed-region, right-of-label, below-label, and nearest-centroid vectors deterministically.</div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-    </div>
-  </main>
+      </div>
+    </main>
+  </div>
 
-  <!-- Region Debug Inspector Modal -->
+  <!-- =======================================================================
+       MODAL 1: CANDIDATE INSPECTOR & ADVANCED DEBUG DETAILS
+       ======================================================================= -->
   <div class="modal-backdrop" id="debugModal">
     <div class="modal-box">
       <div class="modal-header">
-        <h3 id="debugModalTitle" style="font-size: 1.1rem;">Candidate Inspector & Debug Details</h3>
-        <button class="close-btn" onclick="document.getElementById('debugModal').classList.remove('show')">&times;</button>
+        <div>
+          <h3 class="modal-title" id="debugModalTitle">Candidate Inspector &amp; Debug Details</h3>
+          <p style="font-size: 0.8rem; color: var(--text-secondary);" id="debugModalSubtitle">Evaluated OCR candidate boxes and geometry telemetry</p>
+        </div>
+        <button class="close-btn" onclick="document.getElementById('debugModal').classList.remove('show')" aria-label="Close Modal">
+          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
       </div>
-      <div id="debugModalContent" style="display: flex; flex-direction: column; gap: 16px;"></div>
+      <div class="modal-body" id="debugModalContent"></div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="document.getElementById('debugModal').classList.remove('show')">Close</button>
+      </div>
     </div>
   </div>
 
+  <!-- =======================================================================
+       MODAL 2: CREATE NEW TEMPLATE
+       ======================================================================= -->
+  <div class="modal-backdrop" id="newTemplateModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <div>
+          <h3 class="modal-title">Create New Document Template</h3>
+          <p style="font-size: 0.8rem; color: var(--text-secondary);">Define document type metadata and numeric fields</p>
+        </div>
+        <button class="close-btn" onclick="document.getElementById('newTemplateModal').classList.remove('show')" aria-label="Close Modal">
+          <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="grid-2">
+          <div class="form-group">
+            <label class="form-label" for="tplIdInput">Template ID (slug)</label>
+            <input type="text" class="form-control" id="tplIdInput" placeholder="e.g. utility_statement">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="tplNameInput">Template Display Name</label>
+            <input type="text" class="form-control" id="tplNameInput" placeholder="e.g. Utility Statement">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="tplDescInput">Description</label>
+          <input type="text" class="form-control" id="tplDescInput" placeholder="Standard residential or commercial statement">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="document.getElementById('newTemplateModal').classList.remove('show')">Cancel</button>
+        <button class="btn btn-primary" id="btnSaveNewTemplate">Save Template</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Application Logic (100% Vanilla JS, Local) -->
   <script src="app.js"></script>
 </body>
 </html>
